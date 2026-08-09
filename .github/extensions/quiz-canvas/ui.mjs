@@ -66,7 +66,6 @@ export function renderHtml() {
 <div class="controls">
   <button onclick="ctl('assign_plan')">&#128203; Assign Plan</button>
   <button onclick="ctl('run_game')">&#127918; Game Agent</button>
-  <button onclick="ctl('run_platform')">&#127760; Platform Agent</button>
   <button onclick="ctl('run_integration')">&#128279; Integration Agent</button>
   <button onclick="ctl('validate')">&#10003; Validate</button>
   <button onclick="ctl('reset')" style="margin-left:auto">&#10227; Reset</button>

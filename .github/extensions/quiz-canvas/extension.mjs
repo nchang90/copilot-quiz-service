@@ -7,7 +7,7 @@
 //   assign_plan          — materialise the 2-agent execution graph
 //   run_game_agent       — verify emitEvent() in copilot-quiz
 //   run_platform_agent   — verify copilot-quiz-service API + dashboard
-//   run_integration_agent — verify cross-repo contract
+//   run_integration_agent — verify copilot-quiz-service API + dashboard + contract
 //   validate_integration — run 5-test validation suite
 //   check_event_stream   — surface the live dashboard URL
 //   reset_canvas         — reset to initial state
@@ -54,7 +54,6 @@ function applyControl(store, body) {
   switch (body.action) {
     case "assign_plan":       return store.assignPlan();
     case "run_game":          return store.runAgent("game-agent");
-    case "run_platform":      return store.runAgent("platform-agent");
     case "run_integration":   return store.runAgent("integration-agent");
     case "validate":          return store.validate();
     case "reset":             return store.reset();
@@ -151,7 +150,7 @@ const canvas = createCanvas({
     },
     {
       name: "run_integration_agent",
-      description: "Run the Integration Agent: verify producer and service schemas match end to end.",
+      description: "Run the Integration Agent: verify copilot-quiz-service API contract, CORS headers, dashboard, and repo contract.",
       inputSchema: { type: "object", properties: { documentId: { type: "string" } }, additionalProperties: true },
       handler: async (ctx) => { const s = await getStore(docFor(ctx.instanceId, ctx.input)); return s.runAgent("integration-agent"); },
     },

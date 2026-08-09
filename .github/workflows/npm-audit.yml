@@ -1,0 +1,42 @@
+name: npm audit
+
+on:
+  schedule:
+    - cron: "0 9 * * 1"
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "package.json"
+      - "package-lock.json"
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 18
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run npm audit
+        run: npm audit --audit-level=high --json > audit.json || true
+
+      - name: Summarize and enforce thresholds
+        run: |
+          node -e 'const fs=require("fs"); const report=JSON.parse(fs.readFileSync("audit.json","utf8")); const vuln=(report.metadata&&report.metadata.vulnerabilities)||{}; const critical=Number(vuln.critical||0); const high=Number(vuln.high||0); const moderate=Number(vuln.moderate||0); const low=Number(vuln.low||0); const info=Number(vuln.info||0); console.log(`npm audit vulnerabilities -> critical: ${critical}, high: ${high}, moderate: ${moderate}, low: ${low}, info: ${info}`); if (critical>0 || high>0) { process.exit(1); }'
+
+      - name: Upload audit artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: npm-audit-report
+          path: audit.json

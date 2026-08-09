@@ -30,7 +30,6 @@ const AGENTS = [
       "GET /events returns newest-first array",
       "CORS headers present (Access-Control-Allow-Origin: *)",
       "OPTIONS preflight handled (HTTP 204)",
-      "Event type strings match exactly across both repos",
       "Dashboard polls /events every 1–2 seconds",
     ],
   },
@@ -167,7 +166,7 @@ export class QuizStore extends EventEmitter {
       ok: true,
       dashboardUrl: serviceUrl,
       eventsUrl: `${serviceUrl}/events`,
-      note: `Open ${serviceUrl} in the browser while playing the quiz game to watch the live event stream.`
+      note: `Open ${serviceUrl} in the browser while playing the quiz game to watch the live event stream.`,
     };
   }
 

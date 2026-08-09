@@ -22,7 +22,7 @@ Show the end-to-end Copilot Quiz event flow from the integration source repo int
 - The service accepts those events on `POST /event`.
 - `GET /events` returns events newest first.
 - The dashboard updates live without CORS problems.
-- The demo stays simple: two repos, three focused agents, one contract, one live event stream.
+- The demo stays simple: three focused agents, one contract, one live event stream.
 
 ## Demo note
 This canvas is for learning and orchestration only. Do not add gameplay logic to the service repo.
