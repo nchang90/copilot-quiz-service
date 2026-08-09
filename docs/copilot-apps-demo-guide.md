@@ -14,7 +14,7 @@ This guide explains the **end-to-end demo story** across repositories, the Canva
 `copilot-quiz-service` also includes a custom Copilot Canvas extension at `.github/extensions/quiz-canvas` that links the main `copilot-quiz` repo to this service repo.
 
 It demonstrates **agent orchestration** by showing:
-- a 3-agent execution plan (Game Agent, Platform Agent, Integration Agent)
+- a 3-agent execution plan across two repos (Game Agent, Platform Agent, Integration Agent)
 - per-agent run status
 - integration validation results
 - a link to the live event stream in `copilot-quiz-service`

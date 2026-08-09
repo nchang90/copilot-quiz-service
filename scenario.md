@@ -19,7 +19,7 @@ The Canvas extension in this repo shows the orchestration loop that ties the mai
 
 ## What Canvas helps you do
 
-- **Decompose** the integration into the three quiz agents.
+- **Decompose** the integration into producer, platform, and integration agents.
 - **Execute** the agent checks one repo at a time.
 - **Validate** the contract, CORS, dashboard polling, and event types.
 - **Inspect** the live event stream URL while the game is running.

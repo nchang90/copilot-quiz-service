@@ -20,27 +20,41 @@ const AGENTS = [
     ],
   },
   {
-    id: "integration-agent",
-    name: "Integration Agent",
-    emoji: "🔗",
+    id: "platform-agent",
+    name: "Platform Agent",
+    emoji: "🌐",
     repo: "NickAzureDevops/copilot-quiz-service (linked service repo)",
-    task: "Verify the service API, dashboard, CORS, and the contract between both repos",
+    task: "Verify the service API, dashboard, CORS, and runtime constraints",
     checks: [
       "POST /event accepts scoreUpdated and achievementCandidate",
       "GET /events returns newest-first array",
       "CORS headers present (Access-Control-Allow-Origin: *)",
       "OPTIONS preflight handled (HTTP 204)",
-      "Event type strings match exactly across both repos",
       "Dashboard polls /events every 1–2 seconds",
+    ],
+  },
+  {
+    id: "integration-agent",
+    name: "Integration Agent",
+    emoji: "🔗",
+    repo: "NickAzureDevops/copilot-quiz + NickAzureDevops/copilot-quiz-service",
+    task: "Verify the contract between both repos as one runnable demo system",
+    checks: [
+      "Producer event names match service accepted event names exactly",
+      "scoreUpdated payload includes score, delta, and level",
+      "achievementCandidate payload includes score, achievement, and level",
+      "Service keeps accepted events in memory and returns newest first",
+      "Dashboard can show the same event envelope the producer sends",
     ],
   },
 ];
 
 const PLAN_STEPS = [
   { id: "step-1", label: "Assign agents to repos", agent: null },
-  { id: "step-2", label: "🎮 Game Agent: instrument copilot-quiz", agent: "game-agent" },
-  { id: "step-3", label: "🔗 Integration Agent: verify copilot-quiz-service", agent: "integration-agent" },
-  { id: "step-4", label: "✓ Validate integration (5 tests)", agent: null },
+  { id: "step-2", label: "🎮 Game Agent: verify copilot-quiz producer", agent: "game-agent" },
+  { id: "step-3", label: "🌐 Platform Agent: verify copilot-quiz-service runtime", agent: "platform-agent" },
+  { id: "step-4", label: "🔗 Integration Agent: verify cross-repo contract", agent: "integration-agent" },
+  { id: "step-5", label: "✓ Validate integration (5 tests)", agent: null },
 ];
 
 export class QuizStore extends EventEmitter {
@@ -140,7 +154,7 @@ export class QuizStore extends EventEmitter {
     const failed = tests.filter((t) => !t.pass).length;
 
     this._model.validation = { run: true, tests, passed, failed };
-    this._model.plan[3].status = "done";
+    this._model.plan[4].status = "done";
     this._model.status = failed === 0 ? "validated" : "validation-failed";
     this._emit(`Validation: ${passed}/${tests.length} tests passed`);
     return { ok: failed === 0, passed, failed, tests };
@@ -152,7 +166,7 @@ export class QuizStore extends EventEmitter {
       ok: true,
       dashboardUrl: serviceUrl,
       eventsUrl: `${serviceUrl}/events`,
-      note: `Open ${serviceUrl} in the browser while playing the quiz game to watch the live event stream.`
+      note: `Open ${serviceUrl} in the browser while playing the quiz game to watch the live event stream.`,
     };
   }
 

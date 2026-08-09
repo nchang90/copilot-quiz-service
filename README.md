@@ -19,14 +19,14 @@ This service repo is the linked visualizer for that main repo.
 - `POST /event` accepts:
   ```json
   {
-    "type": "quizScoreUpdated | streakMilestoneCandidate",
+    "type": "scoreUpdated | achievementCandidate",
     "timestamp": "ISO-8601",
     "payload": {}
   }
   ```
-- legacy integration-source types are still accepted and normalized:
-  - `scoreUpdated` → `quizScoreUpdated`
-  - `achievementCandidate` → `streakMilestoneCandidate`
+- accepted event types:
+  - `scoreUpdated`
+  - `achievementCandidate`
 - `GET /events` returns all events, newest first
 
 ## Scope

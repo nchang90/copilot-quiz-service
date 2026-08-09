@@ -12,16 +12,17 @@ Show the end-to-end Copilot Quiz event flow from the integration source repo int
 ## Canvas flow
 1. Click **Assign Plan**.
 2. Run **Game Agent** to verify the quiz app emits the correct event types.
-3. Run **Integration Agent** to verify the service API, dashboard, CORS, and repo contract.
-4. Click **Validate** to confirm the integration checks pass.
-5. Click **Check Event Stream** to open the live service URL.
+3. Run **Platform Agent** to verify the service API, dashboard, CORS, and runtime constraints.
+4. Run **Integration Agent** to verify the producer and service contracts match end to end.
+5. Click **Validate** to confirm the integration checks pass.
+6. Click **Check Event Stream** to open the live service URL.
 
 ## What the canvas should prove
 - The game sends `scoreUpdated` and `achievementCandidate` events.
 - The service accepts those events on `POST /event`.
 - `GET /events` returns events newest first.
 - The dashboard updates live without CORS problems.
-- The demo stays simple: two agents, one contract, one live event stream.
+- The demo stays simple: three focused agents, one contract, one live event stream.
 
 ## Demo note
 This canvas is for learning and orchestration only. Do not add gameplay logic to the service repo.
